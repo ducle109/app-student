@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/tbLayout"
+    android:orientation="horizontal"
+    android:stretchColumns="*"
+    android:shrinkColumns="*"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <TableRow
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+            <Button
+                android:id="@+id/btnDay"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="AM/PM" />
+
+            <Button
+                android:id="@+id/btnTime"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_marginTop="-6dp"
+                android:layout_gravity="left|top"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="時間"
+                />
+
+            <Button
+                android:id="@+id/btnMonday"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="月曜日" />
+
+            <Button
+                android:id="@+id/btnTuesday"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="火曜日" />
+            <Button
+                android:id="@+id/btnWednesday"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="水曜日" />
+            <Button
+                android:id="@+id/btnThursday"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="木曜日" />
+            <Button
+                android:id="@+id/btnFriday"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="wrap_content"
+                android:text="金曜日" />
+
+        </TableRow>
+    </TableLayout>
