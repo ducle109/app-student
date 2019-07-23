@@ -3,9 +3,13 @@ package jp.com.studentproject;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +31,7 @@ public class Student_Management extends AppCompatActivity {
     private Button btnSave;
     private Button btnUpdate;
     private Button btnDelete;
+    private Button btnCancel;
     private RadioGroup radioGroupCharacter;
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
@@ -48,6 +53,12 @@ public class Student_Management extends AppCompatActivity {
         studentList = databaseSQLite.getAllStudent();
         setAdapter();
 
+        eventButtons();
+
+
+    }
+
+    public void eventButtons() {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,17 +70,19 @@ public class Student_Management extends AppCompatActivity {
                     updateListStudent();
                     setAdapter();
                     setTextNull();
+                    hidenKeyBoard();
                 }
             }
         });
 
         lvStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Student student = studentList.get(position);
                 editId.setText(String.valueOf(student.getId()));
                 editName.setText(student.getName());
-                editAge.setText(student.getAge()+ "");
+                editAge.setText(student.getAge()+"");
                 String str = "Male";
                 if(str.equals(student.getSex())) {
                     radioButtonMale.setChecked(true);
@@ -98,15 +111,18 @@ public class Student_Management extends AppCompatActivity {
                 } else {
                     student.setSex("Famle");
                 }
-                student.setPhoneNumber(Integer.parseInt(editPhone.getText() + ""));
+                student.setPhoneNumber(editPhone.getText() + "");
                 int result = databaseSQLite.updateStudent(student);
                 showToast("Updated !!!");
                 if(result > 0) {
                     updateListStudent();
                     setTextNull();
+
                 }
                 btnSave.setEnabled(true);
                 btnUpdate.setEnabled(false);
+                btnDelete.setEnabled(false);
+                hidenKeyBoard();
             }
         });
 
@@ -119,6 +135,15 @@ public class Student_Management extends AppCompatActivity {
 
         });
 
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTextNull();
+                btnSave.setEnabled(true);
+                btnUpdate.setEnabled(false);
+                btnDelete.setEnabled(false);
+            }
+        });
     }
 
     public void showAlertDialog(){
@@ -132,6 +157,10 @@ public class Student_Management extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Student student = studentList.get(pos);
                 int result = databaseSQLite.deleteStudent(student.getId());
+                Student student1 = new Student();
+                student1.setId(Integer.parseInt(String.valueOf(editId.getText())));
+                databaseSQLite.updateStudentIDD(student1);
+                databaseSQLite.updateID();
                 showToast("Deleted !!!");
                 if(result > 0) {
                     updateListStudent();
@@ -139,6 +168,7 @@ public class Student_Management extends AppCompatActivity {
                 } else {
                     showToast("Delete fail");
                 }
+
                 dialogInterface.dismiss();
             }
         });
@@ -154,60 +184,72 @@ public class Student_Management extends AppCompatActivity {
 
     // check input data
     private Student createStudent() {
+
         String name = "";
         int age = 0;
         String sex = "";
-        int phone = 0;
+        String phone = "";
         Student student = null;
 
-        if(editName.getText().toString().length() == 0) {
+        String ckName = editName.getText().toString();
+        String ckAge = editAge.getText().toString();
+        String ckPhone = editPhone.getText().toString();
+
+
+        if(ckName.isEmpty()) {
             showToast("Please enter the NAME");
         } else {
             name = editName.getText().toString();
         }
 
-        if(editAge.getText().toString().length() == 0) {
+        if(ckAge.isEmpty()) {
             showToast("Please enter the AGE");
         } else {
             age = Integer.parseInt(editAge.getText() + "");
         }
+        if(!radioButtonMale.isChecked() && !radioButtonFemale.isChecked()) {
+            showToast("Please check the SEX");
+        } else {
+            if(radioButtonMale.isChecked()) {
+                sex = (String) radioButtonMale.getText();
+            }
 
-        if(radioButtonMale.isChecked()) {
-            sex = (String) radioButtonMale.getText();
+            if(radioButtonFemale.isChecked()) {
+                sex = (String) radioButtonFemale.getText();
+            }
         }
-
-        if(radioButtonFemale.isChecked()) {
-            sex = (String) radioButtonFemale.getText();
-        }
-
-        if(editPhone.getText().toString().length() == 0) {
+        if(ckPhone.isEmpty()) {
             showToast("Please enter the PHONE");
         } else {
-            phone = Integer.parseInt(editPhone.getText() + "");
+            phone = String.valueOf(editPhone.getText());
+
         }
-        if(name != "" && age < 0 && sex != "") {
+        if(!name.isEmpty() && !ckAge.isEmpty() && (radioButtonMale.isChecked() || radioButtonFemale.isChecked()) && !phone.isEmpty()) {
             student = new Student(name, age, sex, phone);
+
         } else {
             showToast("Please complete all information");
         }
-
         return student;
     }
 
+
     public void initWidget() {
-        editId      = (EditText) findViewById(R.id.edt_id);
-        editName    = (EditText) findViewById(R.id.edt_name);
-        editAge    = (EditText) findViewById(R.id.edt_age);
-        editPhone  = (EditText) findViewById(R.id.edt_number);
+        editId                   = (EditText) findViewById(R.id.edt_id);
+        editName                 = (EditText) findViewById(R.id.edt_name);
+        editAge                  = (EditText) findViewById(R.id.edt_age);
+        editPhone                = (EditText) findViewById(R.id.edt_number);
 
-        btnSave     = (Button) findViewById(R.id.btn_save);
-        btnUpdate   = (Button) findViewById(R.id.btn_update);
-        btnDelete   = (Button) findViewById(R.id.btn_delete);
-        radioGroupCharacter   = (RadioGroup) findViewById(R.id.radioGroup_character);
-        radioButtonMale        = (RadioButton) findViewById(R.id.radioButton_male);
-        radioButtonFemale        = (RadioButton) findViewById(R.id.radioButton_female);
+        btnSave                  = (Button) findViewById(R.id.btn_save);
+        btnUpdate                = (Button) findViewById(R.id.btn_update);
+        btnDelete                = (Button) findViewById(R.id.btn_delete);
+        btnCancel                = (Button) findViewById(R.id.btn_cancel);
 
-        lvStudent = (ListView) findViewById(R.id.lvStudent);
+        radioGroupCharacter    = (RadioGroup) findViewById(R.id.radioGroup_character);
+        radioButtonMale         = (RadioButton) findViewById(R.id.radioButton_male);
+        radioButtonFemale       = (RadioButton) findViewById(R.id.radioButton_female);
+
+        lvStudent                = (ListView) findViewById(R.id.lvStudent);
     }
 
     public void setAdapter() {
@@ -217,6 +259,7 @@ public class Student_Management extends AppCompatActivity {
         } else {
             customAdapter.notifyDataSetChanged();
             lvStudent.setSelection(customAdapter.getCount() -1);
+
         }
     }
 
@@ -228,12 +271,20 @@ public class Student_Management extends AppCompatActivity {
         }
     }
     public void setTextNull() {
+        editId.setText("");
         editName.setText("");
         editAge.setText("");
         editPhone.setText("");
+        radioButtonFemale.setChecked(false);
+        radioButtonMale.setChecked(false);
+    }
+
+    public void hidenKeyBoard() {
+        InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethod.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
     }
 
     public void showToast(String msg) {
-        Toast.makeText(Student_Management.this, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(Student_Management.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

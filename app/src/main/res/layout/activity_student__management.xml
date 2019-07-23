@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ADD NEW A STUDENT"
+        android:text="@string/add_student_title"
         android:textAlignment="center"
         android:layout_marginTop="30dp"
         android:textColor="#00f"
@@ -18,13 +19,14 @@
         android:id="@+id/edt_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:hint="ID" />
+        android:hint="@string/add_student_id"
+        tools:ignore="Autofill,TextFields" />
     <EditText
         android:id="@+id/edt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name" />
+        android:hint="@string/add_student_name"
+        tools:ignore="Autofill,TextFields" />
     <EditText
         android:id="@+id/edt_age"
         android:layout_marginTop="10dp"
@@ -32,7 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="Age" />
+        android:hint="@string/add_student_age"
+        tools:ignore="Autofill" />
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,19 +43,20 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:id="@+id/radioGroup_character">
+        android:id="@+id/radioGroup_character"
+        tools:ignore="ObsoleteLayoutParam">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male"
+            android:text="@string/add_student_male"
             android:id="@+id/radioButton_male"
             />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female"
+            android:text="@string/add_student_famale"
             android:id="@+id/radioButton_female"
             />
     </RadioGroup>
@@ -64,7 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:inputType="phone"
-        android:hint="Number" />
+        android:hint="@string/add_student_number"
+        tools:ignore="Autofill" />
 
     <LinearLayout
         android:layout_gravity="center"
@@ -75,21 +80,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Save" />
+            android:text="@string/add_student_save"
+            tools:ignore="ButtonStyle" />
         <Button
             android:enabled="false"
             android:id="@+id/btn_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Update" />
+            android:text="@string/add_student_update"
+            tools:ignore="ButtonStyle" />
         <Button
             android:enabled="false"
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Delete" />
+            android:text="@string/add_student_delete"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/school_time_cancelButton"
+            tools:ignore="ButtonStyle" />
+
 
     </LinearLayout>
     <LinearLayout
@@ -102,37 +118,43 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="ID"
+            android:text="@string/add_student_id"
             android:layout_weight="1"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/add_student_name"
             android:layout_weight="5"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Age"
+            android:text="@string/add_student_age"
             android:layout_weight="1"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Sex"
+            android:text="@string/add_student_sex"
             android:layout_weight="2"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Telephone"
+            android:text="@string/list_student_telephone"
             android:layout_weight="3"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     </LinearLayout>
 

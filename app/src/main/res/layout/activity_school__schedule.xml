@@ -23,7 +23,7 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1週間のスケジュール" />
+            android:text="@string/school_time_title" />
 
         <TextView
             android:id="@+id/textView3"
@@ -31,7 +31,7 @@
             android:textColor="#2196F3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="担当者：　レスアン　ドゥク" />
+            android:text="@string/school_time_responsible" />
         <LinearLayout
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
@@ -44,29 +44,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
-                android:text="Set Text: " />
+                android:text="@string/school_time_text" />
             <EditText
                 android:id="@+id/edtText"
                 android:layout_marginRight="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-15dp"
                 android:ems="5"
-                />
+                android:autofillHints=""
+                tools:targetApi="o"
+                android:inputType="text"
+                tools:ignore="LabelFor" />
             <Button
                 android:id="@+id/btnModify"
                 android:textSize="10sp"
                 android:background="#8BC34A"
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:text="Edit Time" />
+                android:text="@string/school_time_editButton"
+                tools:ignore="SmallSp" />
+            <Button
+                android:id="@+id/btnCancel"
+                android:textSize="10sp"
+                android:onClick="clickCancel"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:background="#03A9F4"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="@string/school_time_cancelButton"
+                tools:ignore="OnClick,SmallSp" />
+
         </LinearLayout>
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/school_time_notification" />
         <TableLayout
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tbLayoutStudent"
@@ -77,59 +100,65 @@
             android:stretchColumns="*"
             android:shrinkColumns="*">
             <TableRow
-                android:clickable="true"
                 android:id="@+id/aaaaa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                tools:ignore="UselessParent">
                 <Button
                     android:textSize="10sp"
-                    android:clickable="true"
                     android:id="@+id/aaaaaaa"
                     android:layout_marginTop="-7dp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="AM\nPM" />
+                    android:text="@string/school_time_day"
+                    tools:ignore="ButtonStyle,SmallSp" />
 
                 <Button
                     android:textSize="10sp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="時間" />
+                    android:text="@string/school_time_time"
+                    tools:ignore="ButtonStyle,SmallSp" />
 
                 <Button
                     android:textSize="10sp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="月曜日" />
+                    android:text="@string/school_time_monday"
+                    tools:ignore="ButtonStyle,SmallSp" />
 
                 <Button
                     android:textSize="10sp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="火曜日" />
+                    android:text="@string/school_time_tuesday"
+                    tools:ignore="ButtonStyle,SmallSp" />
                 <Button
                     android:textSize="10sp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="水曜日" />
+                    android:text="@string/school_time_wednesday"
+                    tools:ignore="ButtonStyle,SmallSp" />
                 <Button
                     android:textSize="10sp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="木曜日" />
+                    android:text="@string/school_time_thursday"
+                    tools:ignore="ButtonStyle,SmallSp" />
                 <Button
                     android:textSize="10sp"
                     android:layout_width="match_parent"
                     android:background="@drawable/custom_button"
                     android:layout_height="wrap_content"
-                    android:text="金曜日" />
+                    android:text="@string/school_time_friday"
+                    tools:ignore="ButtonStyle,SmallSp" />
 
             </TableRow>
         </TableLayout>

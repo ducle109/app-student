@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">StudentProject</string>
+    <string name="add_student_title">ADD NEW A STUDENT</string>
+    <string name="add_student_id">ID</string>
+    <string name="add_student_name">Name</string>
+    <string name="add_student_age">Age</string>
+    <string name="add_student_sex">Sex:  </string>
+    <string name="add_student_male">Male</string>
+    <string name="add_student_famale">Famale</string>
+    <string name="add_student_number">Number</string>
+    <string name="add_student_save">Save</string>
+    <string name="add_student_update">Update</string>
+    <string name="add_student_delete">Delete</string>
+
+
+    <string name="list_student_title">List Of All Students</string>
+    <string name="list_student_telephone">Telephone</string>
+
+
+    <string name="search_student_title">Search A Student</string>
+    <string name="search_student_search">SEARCH</string>
+
+
+    <string name="school_time_title">1週間のスケジュール</string>
+    <string name="school_time_responsible">担当者：　レスアン　ドゥク</string>
+    <string name="school_time_text">Set Text: </string>
+    <string name="school_time_notification">Click on long the value to change</string>
+    <string name="school_time_editButton">Edit Time</string>
+    <string name="school_time_cancelButton">Cancel</string>
+    <string name="school_time_day">AM\nPM</string>
+    <string name="school_time_time">時間</string>
+    <string name="school_time_monday">月曜日</string>
+    <string name="school_time_tuesday">火曜日</string>
+    <string name="school_time_wednesday">水曜日</string>
+    <string name="school_time_thursday">木曜日</string>
+    <string name="school_time_friday">金曜日</string>
+
+
 </resources>

@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="Student Management System"
         android:textColor="#F3DA3E6B"
-        android:textSize="26dp"
+        android:textSize="26sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />

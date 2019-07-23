@@ -3,9 +3,12 @@ package jp.com.studentproject;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -18,14 +21,16 @@ import static jp.com.studentproject.R.*;
 
 public class School_Schedule extends AppCompatActivity implements View.OnClickListener {
 
-    private DatabaseSQLiteSchool databaseSQLiteSchool;
+    private DatabaseSQLite databaseSQLite;
     private List<Schoole_Time> studentList;
 
     private Button btnModify;
+    private Button btnCancel;
     private EditText edtText;
     private TableLayout tbLayoutStudent;
     private int idSchool;
-    int data[][] = new int[7][7] ;
+    private int setIdButton;
+    private int[][] data = new int[7][7];
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -34,11 +39,11 @@ public class School_Schedule extends AppCompatActivity implements View.OnClickLi
         setContentView(layout.activity_school__schedule);
         init();
 
-        databaseSQLiteSchool = new DatabaseSQLiteSchool(this);
-        databaseSQLiteSchool.createDefaultNotesIfNeed();
-        studentList =  databaseSQLiteSchool.getAllSchooleTime();
+        databaseSQLite = new DatabaseSQLite(this);
+        databaseSQLite.createDefaultNotesIfNeed();
+        studentList =  databaseSQLite.getAllSchooleTime();
         getShowData();
-
+        btnModify.setEnabled(false);
         btnModify.setOnClickListener(this);
 
     }
@@ -47,73 +52,79 @@ public class School_Schedule extends AppCompatActivity implements View.OnClickLi
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View view) {
+        hidenKeyBoard();
+        String getText = edtText.getText().toString();
         Schoole_Time schooleTime = new Schoole_Time();
         schooleTime.setId((idSchool/10)+1);
+
         switch (idSchool%10) {
             case 0:
-                schooleTime.setSession(edtText.getText()+"");
+                schooleTime.setSession(getText);
                 break;
             case 1:
-                schooleTime.setTime(edtText.getText()+"");
+                schooleTime.setTime(getText);
                 break;
             case 2:
-                schooleTime.setSubjects_monday(edtText.getText()+"");
+                schooleTime.setSubjects_monday(getText);
                 break;
             case 3:
-                schooleTime.setSubjects_tuesday(edtText.getText()+"");
+                schooleTime.setSubjects_tuesday(getText);
                 break;
             case 4:
-                schooleTime.setSubjects_wednesday(edtText.getText()+"");
-            break;
+                schooleTime.setSubjects_wednesday(getText);
+                break;
             case 5:
-                schooleTime.setSubjects_thursday(edtText.getText()+"");
+                schooleTime.setSubjects_thursday(getText);
                 break;
             case 6:
-                schooleTime.setSubjects_friday(edtText.getText()+"");
+                schooleTime.setSubjects_friday(getText);
                 break;
         }
 
-        int result = databaseSQLiteSchool.updateStudent(schooleTime, idSchool % 10);
+        int result = databaseSQLite.updateStudent(schooleTime, idSchool % 10);
+        showToast("Updated! " + getText );
         Button button = (Button) findViewById(idSchool);
-        button.setText(edtText.getText()+"");
-
-
+        button.setText(getText);
+        button.setTextColor(Color.parseColor("#F3000000"));
+        edtText.setText("");
+        btnModify.setEnabled(false);
     }
+
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void getShowData() {
         for(int i = 0; i < 7; i++) {
             TableRow tableRow = new TableRow(this);
             for(int j = 0; j < 7; j++) {
                 Schoole_Time schooleTime = studentList.get(i);
-                Button button = new Button(this);
+                final Button button = new Button(this);
                 data[i][j] = 10*i + j;
                 // id 行
                 button.setId(data[i][j]);
-
                 switch (j) {
                     case 0:
-                        button.setText(schooleTime.getSession()+"");
+                        button.setText(schooleTime.getSession().toString());
                         break;
                     case 1:
                         button.setHeight(50);
                         button.setTextSize(11);
-                        button.setTranslationY(-15);
-                        button.setText(schooleTime.getTime()+"");
+                        button.setTranslationY(-20);
+                        button.setText(schooleTime.getTime().toString());
                         break;
                     case 2:
-                        button.setText(schooleTime.getSubjects_monday()+"");
+                        button.setText(schooleTime.getSubjects_monday().toString());
                         break;
                     case 3:
-                        button.setText(schooleTime.getSubjects_tuesday()+"");
+                        button.setText(schooleTime.getSubjects_tuesday().toString());
                         break;
                     case 4:
-                        button.setText(schooleTime.getSubjects_wednesday()+"");
+                        button.setText(schooleTime.getSubjects_wednesday().toString());
                         break;
                     case 5:
-                        button.setText(schooleTime.getSubjects_thursday()+"");
+                        button.setText(schooleTime.getSubjects_thursday().toString());
                         break;
                     case 6:
-                        button.setText(schooleTime.getSubjects_friday()+"");
+                        button.setText(schooleTime.getSubjects_friday().toString());
                         break;
                 }
                 button.setBackground(getResources().getDrawable(drawable.custom_button));
@@ -122,31 +133,55 @@ public class School_Schedule extends AppCompatActivity implements View.OnClickLi
                 button.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
+                        btnModify.setEnabled(true);
                         Button bt = (Button) view;
                         String str = bt.getText().toString();
                         idSchool = bt.getId();
+                        Button bt1 = (Button) findViewById(setIdButton);
+                        bt1.setTextColor(Color.parseColor("#F3000000"));
+                        bt.setTextColor(Color.parseColor("#ED0A57"));
                         edtText.setText(str);
+                        setIdButton = idSchool;
                         return false;
                     }
                 });
 
             }
-
             tbLayoutStudent.addView(tableRow);
         }
+    }
+
+    public void clickCancel(View view) {
+        Button bt = (Button) findViewById(idSchool);
+        hidenKeyBoard();
+        edtText.setText("");
+        bt.setTextColor(Color.parseColor("#F3000000"));
+        btnModify.setEnabled(false);
     }
 
 
     public void init() {
         btnModify             = (Button) findViewById(id.btnModify);
+        btnCancel             = (Button) findViewById(id.btnCancel);
         edtText               = (EditText) findViewById(id.edtText);
         tbLayoutStudent      = (TableLayout) findViewById(id.tbLayoutStudent);
+    }
+
+    public void showKeyboard() {
+        InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethod.showSoftInput(this.getCurrentFocus(), InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public void hidenKeyBoard() {
+        InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethod.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
     }
 
 
     public void showToast(String msg) {
         Toast.makeText(School_Schedule.this, msg, Toast.LENGTH_SHORT).show();
     }
+
 
 
 }
