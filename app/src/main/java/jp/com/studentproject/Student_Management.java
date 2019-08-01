@@ -1,13 +1,9 @@
 package jp.com.studentproject;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -16,12 +12,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 public class Student_Management extends AppCompatActivity {
+
     private EditText editId;
     private EditText editName;
     private EditText editAge;
@@ -126,7 +125,6 @@ public class Student_Management extends AppCompatActivity {
             }
         });
 
-
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,7 +182,6 @@ public class Student_Management extends AppCompatActivity {
 
     // check input data
     private Student createStudent() {
-
         String name = "";
         int age = 0;
         String sex = "";
@@ -232,7 +229,6 @@ public class Student_Management extends AppCompatActivity {
         }
         return student;
     }
-
 
     public void initWidget() {
         editId                   = (EditText) findViewById(R.id.edt_id);

@@ -36,9 +36,7 @@ public class  Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public Student(byte[] imgAvatar , String phoneNumber, String date, String stClass, String chairman, String hobby, String grade) {
-        this.imgAvatar = imgAvatar;
-        this.phoneNumber = phoneNumber;
+    public Student(String date, String stClass, String chairman, String hobby, String grade) {
         this.date = date;
         this.stClass = stClass;
         this.chairman = chairman;
@@ -133,4 +131,5 @@ public class  Student {
     public void setGrade(String grade) {
         this.grade = grade;
     }
+
 }

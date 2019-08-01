@@ -11,17 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".School_Schedule" />
-        <activity android:name=".SearchStudent" />
-        <activity android:name=".ShowAllListStudent" />
-        <activity
-            android:name=".Student_Management" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Espresso_Demo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".School_Schedule" />
+        <activity android:name=".SearchStudent" />
+        <activity android:name=".ShowAllListStudent" />
+        <activity android:name=".Student_Management" />
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 
