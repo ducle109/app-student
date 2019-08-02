@@ -373,7 +373,8 @@ public class DatabaseSQLite extends SQLiteOpenHelper {
             case 5:
                 values.put(SUBJECTS_THURSDAY, school.getSubjects_thursday());
                 break;
-            case 6: values.put(SUBJECTS_FRIDAY, school.getSubjects_friday());
+            case 6:
+                values.put(SUBJECTS_FRIDAY, school.getSubjects_friday());
                 break;
         }
 

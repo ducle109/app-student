@@ -27,7 +27,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -52,6 +51,8 @@ public class ShowAllListStudentTest {
     public void setUp() throws Exception {
         showAllListStudent = Robolectric.buildActivity(ShowAllListStudent.class).create().get();
         showAllListStudent = activityRule.getActivity();
+        //device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
         context = showAllListStudent.getApplicationContext();
         db = new DatabaseSQLite(context);
 
@@ -93,15 +94,20 @@ public class ShowAllListStudentTest {
         student1.setGrade("very good");
         db.updateStudentInformation(student1);
 
+        listView = (ListView) showAllListStudent.findViewById(R.id.lvShowStudent);
+        listStudent = db.getAllStudent();
 
-        listView = showAllListStudent.findViewById(R.id.lvShowStudent);
-        dialog = new Dialog(context);
 
     }
 
     @Test
-    public void shouldNotBeNull() throws Exception {
-        assertNotNull(showAllListStudent);
+    public void testOnCreateButton() {
+        customAdapter = new CustomAdapter(showAllListStudent, R.layout.activity_show_all_list_student, listStudent);
+        listView.setAdapter(customAdapter);
+        onView(withText(R.string.add_student_name)).check(matches(withText("Name")));
+        onView(withText(R.string.add_student_age)).check(matches(withText("Age")));
+        onView(withId(R.id.lvShowStudent)).perform(click());
+        //onView(withText("Information")).check(matches(isDisplayed()));
 
     }
 
@@ -134,7 +140,11 @@ public class ShowAllListStudentTest {
     @Test
     public void showEditDialog() {
         onView(withId(R.id.lvShowStudent)).perform(click()).inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_id)).check(matches(isDisplayed()));
+        showAllListStudent.showEditDialog(student1);
+        dialog = new Dialog(context, R.style.Dialog);
+        dialog.setTitle("Notification");
+        dialog.setContentView(R.layout.custom_dialog);
+
 
     }
 
@@ -151,14 +161,11 @@ public class ShowAllListStudentTest {
 
     @Test
     public void showAlertDialog() {
-
-
     }
 
 
     @Test
     public void setAdapter() {
-        listStudent = db.getAllStudent();
         customAdapter = new CustomAdapter(showAllListStudent, R.layout.activity_show_all_list_student, listStudent);
         listView.setAdapter(customAdapter);
         assertEquals(customAdapter.getItem(0).getId(), 1);

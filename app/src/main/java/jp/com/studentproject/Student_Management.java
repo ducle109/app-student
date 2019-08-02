@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Student_Management extends AppCompatActivity {
 
@@ -69,7 +70,7 @@ public class Student_Management extends AppCompatActivity {
                     updateListStudent();
                     setAdapter();
                     setTextNull();
-                    hidenKeyBoard();
+                    //hidenKeyBoard();
                 }
             }
         });
@@ -208,7 +209,7 @@ public class Student_Management extends AppCompatActivity {
             showToast("Please check the SEX");
         } else {
             if(radioButtonMale.isChecked()) {
-                sex = (String) radioButtonMale.getText();
+                sex = radioButtonMale.getText().toString();
             }
 
             if(radioButtonFemale.isChecked()) {
@@ -277,7 +278,7 @@ public class Student_Management extends AppCompatActivity {
 
     public void hidenKeyBoard() {
         InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethod.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        inputMethod.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), 0);
     }
 
     public void showToast(String msg) {

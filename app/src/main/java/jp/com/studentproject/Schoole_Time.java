@@ -24,17 +24,6 @@ public class Schoole_Time {
         this.time = time;
     }
 
-    public Schoole_Time(String session, String subjects_monday, String subjects_tuesday, String subjects_wednesday, String subjects_thursday, String subjects_friday, String time) {
-        this.session = session;
-        this.subjects_monday = subjects_monday;
-        this.subjects_tuesday = subjects_tuesday;
-        this.subjects_wednesday = subjects_wednesday;
-        this.subjects_thursday = subjects_thursday;
-        this.subjects_friday = subjects_friday;
-        this.time = time;
-    }
-
-
     public int getId() {
         return id;
     }
