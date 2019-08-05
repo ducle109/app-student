@@ -249,6 +249,7 @@ public class Student_Management extends AppCompatActivity {
         lvStudent                = (ListView) findViewById(R.id.lvStudent);
     }
 
+    // 毎回宣言しなくてもいいです。値があれば更新してくれる。
     public void setAdapter() {
         if(customAdapter == null) {
             customAdapter = new CustomAdapter(this, R.layout.show_all_student, studentList);
@@ -263,9 +264,7 @@ public class Student_Management extends AppCompatActivity {
     public void updateListStudent() {
         studentList.clear();
         studentList.addAll(databaseSQLite.getAllStudent());
-        if(customAdapter != null) {
-            customAdapter.notifyDataSetChanged();
-        }
+        customAdapter.notifyDataSetChanged();
     }
     public void setTextNull() {
         editId.setText("");

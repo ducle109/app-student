@@ -41,7 +41,7 @@ public class ShowAllListStudent extends AppCompatActivity implements View.OnClic
     private Dialog dialog1;
     private Dialog dialog2;
     private ListView lvShowStudent;
-    public static DatabaseSQLite databaseSQLite;
+    private DatabaseSQLite databaseSQLite;
     private CustomAdapter customAdapter;
     private List<Student> studentList;
 
@@ -57,20 +57,24 @@ public class ShowAllListStudent extends AppCompatActivity implements View.OnClic
         studentList = databaseSQLite.getAllStudent();
         setAdapter();
 
+        //clickListViewButton();
+    }
+
+    public void clickListViewButton() {
+        lvShowStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Student student = studentList.get(position);
+                showInformationDialog(student);
+            }
+        });
+
         lvShowStudent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Student student = studentList.get(position);
                 showEditDialog(student);
                 return true;
-            }
-        });
-
-        lvShowStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Student student = studentList.get(position);
-                showInformationDialog(student);
             }
         });
     }
@@ -178,7 +182,6 @@ public class ShowAllListStudent extends AppCompatActivity implements View.OnClic
         txtChairman = (TextView) dialog2.findViewById(R.id.txt_get_chairman);
         txtHobby = (TextView) dialog2.findViewById(R.id.txt_get_hobby);
         txtGrade = (TextView) dialog2.findViewById(R.id.txt_get_grade);
-
         txtname.setText(student.getName());
         txtSex.setText(student.getSex());
         txtAge.setText(student.getAge() + "");

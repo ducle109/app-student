@@ -48,7 +48,6 @@ public class School_ScheduleTest {
     private TableLayout tbLayoutStudent;
     private EditText edtText;
 
-    private int[][] data = new int[7][7];
 
     @Rule
     public ActivityTestRule<School_Schedule> activityRule =
@@ -85,7 +84,7 @@ public class School_ScheduleTest {
     }
 
     @Test
-    public void testOnClickCreate() {
+    public void testOnClickCreateCase0() {
         onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
         int num = 0;
         onView(withId(num)).perform(longClick());
@@ -105,6 +104,133 @@ public class School_ScheduleTest {
         onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
 
     }
+    @Test
+    public void testOnClickCreateCase1() {
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
+        int num = 1;
+        onView(withId(num)).perform(longClick());
+        edtText.setText("aaa");
+
+        Button button = (Button) schollActivity.findViewById(num);
+        Schoole_Time schooleTime = new Schoole_Time();
+        schooleTime.setId(num);
+        schooleTime.setSubjects_tuesday(edtText.getText().toString());
+        db.updateStudent(schooleTime, num);
+        onView(withId(R.id.btnModify)).perform(click(), closeSoftKeyboard());
+
+        //assertEquals("aaa", button.getText());
+
+        /*onView(withId(num)).check(matches(withTextColor(R.color.color_black)));
+        onView(withId(R.id.edtText)).perform(typeText(""));
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
+
+    }
+    @Test
+    public void testOnClickCreateCase2() {
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
+        int num = 2;
+        onView(withId(num)).perform(longClick());
+        edtText.setText("aaa");
+
+        Button button = (Button) schollActivity.findViewById(num);
+        Schoole_Time schooleTime = new Schoole_Time();
+        schooleTime.setId(num);
+        schooleTime.setSubjects_tuesday(edtText.getText().toString());
+        db.updateStudent(schooleTime, num);
+        onView(withId(R.id.btnModify)).perform(click(), closeSoftKeyboard());
+
+        //assertEquals("aaa", button.getText());
+
+        /*onView(withId(num)).check(matches(withTextColor(R.color.color_black)));
+        onView(withId(R.id.edtText)).perform(typeText(""));
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
+
+    }
+    @Test
+    public void testOnClickCreateCase3() {
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
+        int num = 3;
+        onView(withId(num)).perform(longClick());
+        edtText.setText("aaa");
+
+        Button button = (Button) schollActivity.findViewById(num);
+        Schoole_Time schooleTime = new Schoole_Time();
+        schooleTime.setId(num);
+        schooleTime.setSubjects_tuesday(edtText.getText().toString());
+        db.updateStudent(schooleTime, num);
+        onView(withId(R.id.btnModify)).perform(click(), closeSoftKeyboard());
+
+        //assertEquals("aaa", button.getText());
+
+        /*onView(withId(num)).check(matches(withTextColor(R.color.color_black)));
+        onView(withId(R.id.edtText)).perform(typeText(""));
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
+
+    }
+    @Test
+    public void testOnClickCreateCase4() {
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
+        int num = 4;
+        onView(withId(num)).perform(longClick());
+        edtText.setText("aaa");
+
+        Button button = (Button) schollActivity.findViewById(num);
+        Schoole_Time schooleTime = new Schoole_Time();
+        schooleTime.setId(num);
+        schooleTime.setSubjects_tuesday(edtText.getText().toString());
+        db.updateStudent(schooleTime, num);
+        onView(withId(R.id.btnModify)).perform(click(), closeSoftKeyboard());
+
+        //assertEquals("aaa", button.getText());
+
+        /*onView(withId(num)).check(matches(withTextColor(R.color.color_black)));
+        onView(withId(R.id.edtText)).perform(typeText(""));
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
+
+    }
+    @Test
+    public void testOnClickCreateCase5() {
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
+        int num = 5;
+        onView(withId(num)).perform(longClick());
+        edtText.setText("aaa");
+
+        Button button = (Button) schollActivity.findViewById(num);
+        Schoole_Time schooleTime = new Schoole_Time();
+        schooleTime.setId(num);
+        schooleTime.setSubjects_tuesday(edtText.getText().toString());
+        db.updateStudent(schooleTime, num);
+        onView(withId(R.id.btnModify)).perform(click(), closeSoftKeyboard());
+
+        //assertEquals("aaa", button.getText());
+
+        /*onView(withId(num)).check(matches(withTextColor(R.color.color_black)));
+        onView(withId(R.id.edtText)).perform(typeText(""));
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
+
+    }
+    @Test
+    public void testOnClickCreateCase6() {
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
+        int num = 6;
+        onView(withId(6)).perform(longClick());
+        edtText.setText("aaa");
+
+        Button button = (Button) schollActivity.findViewById(num);
+        Schoole_Time schooleTime = new Schoole_Time();
+        schooleTime.setId(num);
+        schooleTime.setSubjects_tuesday(edtText.getText().toString());
+        db.updateStudent(schooleTime, num);
+        onView(withId(R.id.btnModify)).perform(click(), closeSoftKeyboard());
+
+        //assertEquals("aaa", button.getText());
+
+        /*onView(withId(num)).check(matches(withTextColor(R.color.color_black)));
+        onView(withId(R.id.edtText)).perform(typeText(""));
+        onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));*/
+
+    }
+
 
     @Test
     public void clickCancel() throws InterruptedException {
@@ -113,11 +239,11 @@ public class School_ScheduleTest {
 
         Button button = (Button) schollActivity.findViewById(3);
         onView(withId(R.id.btnCancel)).perform(click());
-        try {
+        /*try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         onView(withId(R.id.edtText)).check(matches(withText("")));
         onView(withId(R.id.btnModify)).check(matches(not(isEnabled())));
     }
@@ -133,7 +259,10 @@ public class School_ScheduleTest {
 
             }
         }
-        onView(withId(2)).perform(longClick());
+        //Button button = (Button) schollActivity.findViewById(5);
+        //assertEquals(5, button);
+        onView(withId(6)).check(matches(isDisplayed()));
+        onView(withId(6)).perform(closeSoftKeyboard(), longClick());
         onView(withId(R.id.edtText)).check(matches(withText("数学")));
         onView(withId(2)).check(matches(withTextColor(R.color.color_red)));
 

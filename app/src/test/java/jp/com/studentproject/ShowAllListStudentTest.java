@@ -14,19 +14,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -35,13 +38,13 @@ public class ShowAllListStudentTest {
     private CustomAdapter customAdapter;
 
     private ShowAllListStudent showAllListStudent;
-    private List<Student> listStudent;
+    private List<Student> studentList;
     private Student student1;
     private Student student2;
     private ListView listView;
     private Dialog dialog;
     private Context context;
-    public DatabaseSQLite db;
+    private DatabaseSQLite db;
 
     @Rule
     public ActivityTestRule<ShowAllListStudent> activityRule =
@@ -49,13 +52,13 @@ public class ShowAllListStudentTest {
 
     @Before
     public void setUp() throws Exception {
-        showAllListStudent = Robolectric.buildActivity(ShowAllListStudent.class).create().get();
-        showAllListStudent = activityRule.getActivity();
+        showAllListStudent = Robolectric.buildActivity(ShowAllListStudent.class).get();
+        activityRule.getActivity();
         //device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         context = showAllListStudent.getApplicationContext();
         db = new DatabaseSQLite(context);
-
+        listView = (ListView) showAllListStudent.findViewById(R.id.lvShowStudent);
         student1 = new Student();
         student1.setId(1);
         student1.setName("aaaa");
@@ -94,47 +97,65 @@ public class ShowAllListStudentTest {
         student1.setGrade("very good");
         db.updateStudentInformation(student1);
 
-        listView = (ListView) showAllListStudent.findViewById(R.id.lvShowStudent);
-        listStudent = db.getAllStudent();
+        Robolectric.buildActivity(ShowAllListStudent.class).create().get();
 
 
     }
 
     @Test
-    public void testOnCreateButton() {
-        customAdapter = new CustomAdapter(showAllListStudent, R.layout.activity_show_all_list_student, listStudent);
-        listView.setAdapter(customAdapter);
-        onView(withText(R.string.add_student_name)).check(matches(withText("Name")));
-        onView(withText(R.string.add_student_age)).check(matches(withText("Age")));
-        onView(withId(R.id.lvShowStudent)).perform(click());
-        //onView(withText("Information")).check(matches(isDisplayed()));
+    public void testOnItemClickButton() {
+        // lvShowStudent setOnClick Listener
+        studentList = db.getAllStudent();
 
+        showAllListStudent.clickListViewButton();
+
+        onData(anything())
+                .inAdapterView(withId(R.id.lvShowStudent))
+                .atPosition(0)
+                .check(matches(isDisplayed()))
+                .perform(click(), closeSoftKeyboard());
+        //student1 = studentList.get(0);
+        //showAllListStudent.showInformationDialog(student1);
+        onView(withText("Information"))
+                .inRoot(isDialog()) // <---
+                .check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.txt_get_name)).check(matches(withText("aaaa")));
+        onView(withId(R.id.txt_get_age)).check(matches(withText("22")));
+        onView(withId(R.id.txt_get_sex)).check(matches(withText("Male")));
+        onView(withId(R.id.txt_get_phone)).check(matches(withText("12345")));
+        onView(withId(R.id.txt_get_class)).check(matches(withText("12A5")));
+        onView(withId(R.id.txt_get_chairman)).check(matches(withText("hai")));
+        onView(withId(R.id.txt_get_hobby)).check(matches(withText("music")));
+        onView(withId(R.id.txt_get_grade)).check(matches(withText("very good")));
     }
-
     @Test
-    public void showInformationDialog() {
-        listStudent = db.getAllStudent();
+    public void testOnItemLongClickButton() {
+        studentList = db.getAllStudent();
+        //showAllListStudent.clickListViewButton();
+        onData(anything())
+                .inAdapterView(withId(R.id.lvShowStudent))
+                .atPosition(0)
+                .check(matches(isDisplayed()))
+                .perform(longClick());
+        /*
 
-        List<Student> list = new ArrayList<Student>();
-        list.add(student1);
-        list.add(student2);
+       */
+        //student1 = studentList.get(0);
+        //showAllListStudent.showEditDialog(student1);
+        /*onView(withText("Information"))
+                .inRoot(isDialog()) // <---
+                .check(matches(not(isDisplayed())));
 
-
-        for(int i = 0; i < list.size(); i++) {
-            assertEquals(list.get(i).getId(), listStudent.get(i).getId());
-            assertEquals(list.get(i).getName(), listStudent.get(i).getName());
-            assertEquals(list.get(i).getAge(), listStudent.get(i).getAge());
-            assertEquals(list.get(i).getSex(), listStudent.get(i).getSex());
-            assertEquals(list.get(i).getPhoneNumber(), listStudent.get(i).getPhoneNumber());
-            assertEquals(list.get(i).getDate(), listStudent.get(i).getDate());
-            assertEquals(list.get(i).getStClass(), listStudent.get(i).getStClass());
-            assertEquals(list.get(i).getChairman(), listStudent.get(i).getChairman());
-            assertEquals(list.get(i).getHobby(), listStudent.get(i).getHobby());
-            assertEquals(list.get(i).getGrade(), listStudent.get(i).getGrade());
-        }
-
+        onView(withId(R.id.txt_get_name)).check(matches(withText("aaaa")));
+        onView(withId(R.id.txt_get_age)).check(matches(withText("22")));
+        onView(withId(R.id.txt_get_sex)).check(matches(withText("Male")));
+        onView(withId(R.id.txt_get_phone)).check(matches(withText("12345")));
+        onView(withId(R.id.txt_get_class)).check(matches(withText("12A5")));
+        onView(withId(R.id.txt_get_chairman)).check(matches(withText("hai")));
+        onView(withId(R.id.txt_get_hobby)).check(matches(withText("music")));
+        onView(withId(R.id.txt_get_grade)).check(matches(withText("very good")));*/
     }
-
 
 
     @Test
@@ -151,8 +172,8 @@ public class ShowAllListStudentTest {
 
     @Test
     public void getShowInformation() {
-        listStudent = db.getAllStudent();
-        Student student = listStudent.get(0);
+        studentList = db.getAllStudent();
+        Student student = studentList.get(0);
         showAllListStudent.showInformationDialog(student);
         showAllListStudent.getShowInformation(student);
         // Click on the button that shows the dialog
@@ -166,7 +187,12 @@ public class ShowAllListStudentTest {
 
     @Test
     public void setAdapter() {
-        customAdapter = new CustomAdapter(showAllListStudent, R.layout.activity_show_all_list_student, listStudent);
+        showAllListStudent.setAdapter();
+    }
+
+    @Test
+    public void testCustomAdapter() {
+        customAdapter = new CustomAdapter(showAllListStudent, R.layout.activity_show_all_list_student, studentList);
         listView.setAdapter(customAdapter);
         assertEquals(customAdapter.getItem(0).getId(), 1);
         assertEquals(customAdapter.getItem(0).getName(), "aaaa");
@@ -185,21 +211,19 @@ public class ShowAllListStudentTest {
                 .onChildView(withId(R.id.tv_id))
                 .check(matches(withText("2")))
                 .check(matches(isDisplayed()));
-
     }
 
+    @Test
+    public void whenAddCalledAnswered() {
+        ShowAllListStudent myList = mock(ShowAllListStudent.class);
+
+    }
 
     @Test
     public void showToast() {
         String str = "save";
 
         showAllListStudent.showToast(str);
-
-        //onView(withText(str)).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
-
-        /*onView(withText(str)).
-                inRoot(withDecorView(not(is(showAllListStudent.getWindow().getDecorView())))).
-                check(matches(isDisplayed()));*/
 
     }
 

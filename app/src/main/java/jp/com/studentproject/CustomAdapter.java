@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<Student> {
-    public Object item;
     private Context context;
     private int layout;
     private List<Student> listStudent;
